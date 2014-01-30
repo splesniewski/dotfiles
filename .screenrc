@@ -1,0 +1,41 @@
+layout save default
+layout autosave on
+
+vbell on
+autodetach on
+startup_message off
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+shell -$SHELL
+defscrollback 100000
+
+# don't kill window after the process died
+zombie "^["
+
+################
+#
+# keybindings
+#
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+#make them better
+bind 'K' kill
+bind 'I' login on
+bind 'O' login off
+bind '}' history
+bind ^] paste [.]
+
+#
+bind = resize =
+bind + resize +1
+bind - resize -1
+bind _ resize max
+
+#
+bind ^u	layout next

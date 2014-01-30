@@ -1,0 +1,45 @@
+#
+alias emcas=emacs
+alias ls="ls -CF"
+alias sl="ls -CF"
+alias sls="ls -CF"
+alias ,s="ls -CF"
+alias vf=cd
+alias xs=cd
+
+alias j=jobs
+alias hwu=who
+alias sus=suspend
+alias res='eval `resize -u`;export TERM TERMCAP'
+alias ssbind="screen -X -x $STY setenv SSH_AUTH_SOCK ${SSH_AUTH_SOCK}; 
+screen -X -x ${STY}  setenv SSH_AGENT_PID ${SSH_AGENT_PID};
+screen -X -x ${STY}  echo \"ssh-agent env bound\";
+"
+
+function hex () { for i in $*; do echo $i|awk '{printf("0x%x\n",$1)}'; done; }
+function oct () { for i in $*; do echo $i|awk '{printf("0x%o\n",$1)}'; done; }
+function mann () { nroff -man $* | less ;}
+function dmkdir () { local d=`TZ=UTC date +%Y%m%d_%H%MZ`-${1}; mkdir ${d} && cd ${d}; }
+function scripton () {
+    local d=`TZ=UTC date +%Y%m%d_%H%MZ`
+    local SCRIPT_FILE=${HISTDIR}/script/${DATESTAMP}-${d}.script
+    PS1_SCRIPTFLAG=s${PS1_SCRIPTFLAG} script ${SCRIPT_FILE}
+    gzip ${SCRIPT_FILE}
+}
+function sscreen(){
+    pushd /tmp > /dev/null
+    local CMD=""
+    local CMDTITLE=""
+    local h
+    for h in $*; do
+        CMD=${CMD}" ssh -At ${h}"
+        CMDTITLE=${h}/${CMDTITLE}
+    done
+    screen -t ${CMDTITLE}ssh ${CMD}
+    popd > /dev/null
+}
+#sscreen(){ screen -t "$1/ssh" ssh $1;}
+#zlscreen(){ screen -t "$1/zlogin" zlogin $1;}
+
+#
+if [ -f ~/.bash_alias.local ]; then source ~/.bash_alias.local; fi
