@@ -29,6 +29,7 @@
 	     cmd-list)))))
     
       (global-set-key "\M-x" 'ido-execute)
+)
 
 ;; Make numbered backup
 (setq version-control t)
